@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { Eye, EyeOff, Mail, Lock, User, Phone, Store } from "lucide-react";
+import { Eye, EyeOff, Mail, Lock, User, Phone, Briefcase } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -14,7 +14,7 @@ type UserType = "buyer" | "seller" | "both";
 
 const userTypes: { value: UserType; label: string; description: string; icon: React.ReactNode }[] = [
   { value: "buyer", label: "Buyer", description: "Shop from vendors", icon: <User className="h-5 w-5" /> },
-  { value: "seller", label: "Seller", description: "Sell your products", icon: <Store className="h-5 w-5" /> },
+  { value: "seller", label: "Seller", description: "Sell your products", icon: <Briefcase className="h-5 w-5" /> },
   { value: "both", label: "Both", description: "Buy & sell", icon: <span className="text-lg">🔄</span> },
 ];
 
@@ -127,9 +127,10 @@ export default function Signup() {
                   <div className="space-y-2">
                     <Label htmlFor="business">Business Name</Label>
                     <div className="relative">
-                      <Store className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                      <Input id="business" placeholder="Your store name" className="pl-10" value={businessName} onChange={(e) => setBusinessName(e.target.value)} required />
+                      <Briefcase className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                      <Input id="business" placeholder="Your business name" className="pl-10" value={businessName} onChange={(e) => setBusinessName(e.target.value)} />
                     </div>
+                    <p className="text-xs text-muted-foreground">Leave blank to auto-generate from your name</p>
                   </div>
                 )}
 

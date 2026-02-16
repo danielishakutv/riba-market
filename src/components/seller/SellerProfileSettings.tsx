@@ -11,7 +11,7 @@ import { Upload, MapPin, Crown, Save } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
 export interface SellerProfile {
-  storeName: string;
+  businessName: string;
   description: string;
   email: string;
   phone: string;
@@ -22,7 +22,7 @@ export interface SellerProfile {
 }
 
 const defaultProfile: SellerProfile = {
-  storeName: "TechHub NG",
+  businessName: "TechHub NG",
   description: "Your one-stop shop for electronics and gadgets",
   email: "hello@techhubng.com",
   phone: "+234 801 234 5678",
@@ -99,7 +99,7 @@ export default function SellerProfileSettings() {
       {/* Logo Upload */}
       <Card>
         <CardHeader>
-          <CardTitle className="text-base">Store Logo</CardTitle>
+          <CardTitle className="text-base">Business Logo</CardTitle>
         </CardHeader>
         <CardContent>
           <div className="flex items-center gap-4">
@@ -108,7 +108,7 @@ export default function SellerProfileSettings() {
               onClick={() => fileInputRef.current?.click()}
             >
               {form.logoUrl ? (
-                <img src={form.logoUrl} alt="Store logo" className="h-full w-full object-cover rounded-xl" />
+                <img src={form.logoUrl} alt="Business logo" className="h-full w-full object-cover rounded-xl" />
               ) : (
                 <Upload className="h-6 w-6 text-muted-foreground" />
               )}
@@ -127,12 +127,12 @@ export default function SellerProfileSettings() {
       {/* Store Details */}
       <Card>
         <CardHeader>
-          <CardTitle className="text-base">Store Details</CardTitle>
+          <CardTitle className="text-base">Business Details</CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="space-y-2">
-            <Label>Store Name</Label>
-            <Input value={form.storeName} onChange={(e) => updateField("storeName", e.target.value)} />
+            <Label>Business Name</Label>
+            <Input value={form.businessName} onChange={(e) => updateField("businessName", e.target.value)} />
           </div>
           <div className="space-y-2">
             <Label>Description</Label>

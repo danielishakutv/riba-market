@@ -5,23 +5,18 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { formatNaira } from "@/data/mock";
 import { mockOrders, sellerProducts } from "@/data/mockExtended";
 import {
   BarChart3, Package, ShoppingCart, Users, DollarSign,
   Plus, Search, Home, Settings, Menu,
-  Edit, Trash2, BookOpen, Store,
+  Edit, Trash2, BookOpen,
 } from "lucide-react";
 import SellerProfileSettings from "@/components/seller/SellerProfileSettings";
-import CatalogueManager from "@/components/seller/CatalogueManager";
 import StoreManager from "@/components/seller/StoreManager";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
-import { useLocalCache } from "@/hooks/useLocalCache";
-import { type SellerStore, STORE_TYPE_LABELS } from "@/data/storeTypes";
 
 const revenueData = [
   { month: "Jul", revenue: 120000 },
@@ -52,7 +47,6 @@ const navItems = [
   { label: "Overview", icon: BarChart3, tab: "overview" },
   { label: "Orders", icon: ShoppingCart, tab: "orders" },
   { label: "Products", icon: Package, tab: "products" },
-  { label: "Stores", icon: Store, tab: "stores" },
   { label: "Catalogue", icon: BookOpen, tab: "catalogue" },
   { label: "Settings", icon: Settings, tab: "settings" },
 ];
@@ -92,8 +86,7 @@ function SideNav({ activeTab, setActiveTab }: { activeTab: string; setActiveTab:
 export default function SellerDashboard() {
   const [activeTab, setActiveTab] = useState("overview");
   const [mobileOpen, setMobileOpen] = useState(false);
-  const { data: stores } = useLocalCache<SellerStore[]>("riba_seller_stores", []);
-  const [selectedStoreId, setSelectedStoreId] = useState<string>("");
+  const [selectedCatalogueId, setSelectedCatalogueId] = useState<string>("");
 
   return (
     <div className="min-h-screen bg-background flex">
@@ -297,48 +290,11 @@ export default function SellerDashboard() {
             </Card>
           )}
 
-          {activeTab === "stores" && <StoreManager />}
-
           {activeTab === "catalogue" && (
-            <div className="space-y-4">
-              {stores.length > 0 && (
-                <div className="flex items-center gap-3">
-                  <Label className="text-sm font-medium whitespace-nowrap">Select Store:</Label>
-                  <Select value={selectedStoreId} onValueChange={setSelectedStoreId}>
-                    <SelectTrigger className="w-64">
-                      <SelectValue placeholder="Choose a store" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {stores.map((s) => (
-                        <SelectItem key={s.id} value={s.id}>
-                          {s.name} ({STORE_TYPE_LABELS[s.type]})
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </div>
-              )}
-              {stores.length === 0 ? (
-                <Card>
-                  <CardContent className="py-12 text-center">
-                    <Store className="h-10 w-10 text-muted-foreground mx-auto mb-3" />
-                    <p className="text-sm text-muted-foreground">Create a store first to manage its catalogue.</p>
-                    <Button size="sm" className="btn-profit mt-3" onClick={() => setActiveTab("stores")}>
-                      <Plus className="h-4 w-4 mr-1" /> Create Store
-                    </Button>
-                  </CardContent>
-                </Card>
-              ) : !selectedStoreId ? (
-                <Card>
-                  <CardContent className="py-12 text-center">
-                    <BookOpen className="h-10 w-10 text-muted-foreground mx-auto mb-3" />
-                    <p className="text-sm text-muted-foreground">Select a store above to manage its catalogue.</p>
-                  </CardContent>
-                </Card>
-              ) : (
-                <CatalogueManager storeId={selectedStoreId} />
-              )}
-            </div>
+            <StoreManager
+              selectedCatalogueId={selectedCatalogueId}
+              onSelectCatalogue={setSelectedCatalogueId}
+            />
           )}
 
           {activeTab === "settings" && <SellerProfileSettings />}

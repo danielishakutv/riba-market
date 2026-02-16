@@ -1,31 +1,38 @@
-export const STORE_TYPES = ["products", "services", "food-drinks", "fashion"] as const;
-export type StoreType = typeof STORE_TYPES[number];
+export const CATALOGUE_CATEGORIES = ["products", "services", "food-drinks", "fashion"] as const;
+export type CatalogueCategory = typeof CATALOGUE_CATEGORIES[number];
 
-export interface SellerStore {
+export interface SellerCatalogue {
   id: string;
   name: string;
-  type: StoreType;
+  category: CatalogueCategory;
   description: string;
   createdAt: string;
 }
 
-export const STORE_TYPE_LABELS: Record<StoreType, string> = {
+export const CATALOGUE_CATEGORY_LABELS: Record<CatalogueCategory, string> = {
   products: "Products",
   services: "Services",
   "food-drinks": "Food & Drinks",
   fashion: "Fashion",
 };
 
-export const STORE_TYPE_ICONS: Record<StoreType, string> = {
+export const CATALOGUE_CATEGORY_ICONS: Record<CatalogueCategory, string> = {
   products: "Package",
   services: "Wrench",
   "food-drinks": "UtensilsCrossed",
   fashion: "Shirt",
 };
 
-export const STORE_TYPE_COLORS: Record<StoreType, string> = {
+export const CATALOGUE_CATEGORY_COLORS: Record<CatalogueCategory, string> = {
   products: "category-product",
   services: "category-service",
   "food-drinks": "category-restaurant",
   fashion: "bg-pink-100 text-pink-700 dark:bg-pink-900/30 dark:text-pink-400",
 };
+
+// Legacy aliases for backward compatibility
+export type StoreType = CatalogueCategory;
+export type SellerStore = SellerCatalogue;
+export const STORE_TYPES = CATALOGUE_CATEGORIES;
+export const STORE_TYPE_LABELS = CATALOGUE_CATEGORY_LABELS;
+export const STORE_TYPE_COLORS = CATALOGUE_CATEGORY_COLORS;

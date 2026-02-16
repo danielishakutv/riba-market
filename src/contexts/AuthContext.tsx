@@ -101,8 +101,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         (u) => u.email.toLowerCase() === userData.email.toLowerCase()
       );
       if (exists) return { success: false, error: "An account with this email already exists" };
+      // Auto-assign a business name for sellers if not provided
+      const businessName =
+        (userData.userType === "seller" || userData.userType === "both")
+          ? (userData.businessName || `${userData.name}'s Business`)
+          : userData.businessName;
       const newUser: UserAccount = {
         ...userData,
+        businessName,
         id: `user-${Date.now()}`,
         isPro: false,
         createdAt: new Date().toISOString(),

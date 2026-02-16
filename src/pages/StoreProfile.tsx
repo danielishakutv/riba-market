@@ -3,7 +3,7 @@ import { Header } from "@/components/landing/Header";
 import { Footer } from "@/components/landing/Footer";
 import { useLocalCache } from "@/hooks/useLocalCache";
 import { type SellerProfile } from "@/components/seller/SellerProfileSettings";
-import { type SellerStore, STORE_TYPE_LABELS, STORE_TYPE_COLORS } from "@/data/storeTypes";
+import { type SellerCatalogue, CATALOGUE_CATEGORY_LABELS, CATALOGUE_CATEGORY_COLORS } from "@/data/storeTypes";
 import { BadgeCheck, Star, Share2, MapPin, Users, ShoppingBag } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -16,14 +16,14 @@ import StoreProfileStoreTab from "@/components/store/StoreProfileStoreTab";
 export default function StoreProfile() {
   const { storeName } = useParams();
   const { data: sellerProfile } = useLocalCache<SellerProfile>("riba_seller_profile", {
-    storeName: "TechHub NG", description: "Your one-stop shop for quality electronics and gadgets in Nigeria.", email: "", phone: "+234 801 234 5678",
+    businessName: "TechHub NG", description: "Your one-stop shop for quality electronics and gadgets in Nigeria.", email: "", phone: "+234 801 234 5678",
     logoUrl: null, googleMapsLink: "", isPro: false, hideSoldCount: false,
   });
-  const { data: stores } = useLocalCache<SellerStore[]>("riba_seller_stores", []);
+  const { data: catalogues } = useLocalCache<SellerCatalogue[]>("riba_seller_catalogues", []);
 
   const totalSold = 552;
   const store = {
-    name: storeName || sellerProfile.storeName,
+    name: storeName || sellerProfile.businessName,
     verified: true,
     rating: 4.7,
     reviewCount: 312,
@@ -57,9 +57,9 @@ export default function StoreProfile() {
                   {store.verified && <BadgeCheck className="h-6 w-6 text-primary" />}
                 </div>
                 <div className="flex flex-wrap items-center gap-3 text-sm text-muted-foreground mb-3">
-                  {stores.length > 0 && stores.map((s) => (
-                    <Badge key={s.id} variant="secondary" className={`text-xs ${STORE_TYPE_COLORS[s.type]}`}>
-                      {STORE_TYPE_LABELS[s.type]}
+                  {catalogues.length > 0 && catalogues.map((c) => (
+                    <Badge key={c.id} variant="secondary" className={`text-xs ${CATALOGUE_CATEGORY_COLORS[c.category]}`}>
+                      {CATALOGUE_CATEGORY_LABELS[c.category]}
                     </Badge>
                   ))}
                   <span className="flex items-center gap-1">
@@ -90,12 +90,12 @@ export default function StoreProfile() {
 
         {/* Tabs */}
         <div className="container py-6">
-          <Tabs defaultValue={stores.length > 0 ? stores[0].id : "all"}>
+          <Tabs defaultValue={catalogues.length > 0 ? catalogues[0].id : "all"}>
             <TabsList className="flex-wrap h-auto gap-1">
-              {stores.length === 0 && <TabsTrigger value="all">All Products</TabsTrigger>}
-              {stores.map((s) => (
-                <TabsTrigger key={s.id} value={s.id}>
-                  {s.name}
+              {catalogues.length === 0 && <TabsTrigger value="all">All Products</TabsTrigger>}
+              {catalogues.map((c) => (
+                <TabsTrigger key={c.id} value={c.id}>
+                  {c.name}
                 </TabsTrigger>
               ))}
               <TabsTrigger value="about">About</TabsTrigger>
@@ -103,14 +103,14 @@ export default function StoreProfile() {
               <TabsTrigger value="policies">Policies</TabsTrigger>
             </TabsList>
 
-            {stores.length === 0 && (
+            {catalogues.length === 0 && (
               <TabsContent value="all">
                 <StoreProfileStoreTab storeName={store.name} />
               </TabsContent>
             )}
-            {stores.map((s) => (
-              <TabsContent key={s.id} value={s.id}>
-                <StoreProfileStoreTab storeName={store.name} storeId={s.id} storeType={s.type} />
+            {catalogues.map((c) => (
+              <TabsContent key={c.id} value={c.id}>
+                <StoreProfileStoreTab storeName={store.name} storeId={c.id} storeType={c.category} />
               </TabsContent>
             ))}
 

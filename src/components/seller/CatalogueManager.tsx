@@ -34,11 +34,14 @@ const emptyCatalogue: CatalogueItem = {
 };
 
 interface CatalogueManagerProps {
+  catalogueId?: string;
+  /** @deprecated Use catalogueId instead */
   storeId?: string;
 }
 
-export default function CatalogueManager({ storeId }: CatalogueManagerProps) {
-  const cacheKey = storeId ? `riba_catalogue_${storeId}` : "riba_catalogue";
+export default function CatalogueManager({ catalogueId, storeId }: CatalogueManagerProps) {
+  const id = catalogueId || storeId;
+  const cacheKey = id ? `riba_catalogue_${id}` : "riba_catalogue";
   const { data: items, update: setItems } = useLocalCache<CatalogueItem[]>(cacheKey, []);
   const [editing, setEditing] = useState<CatalogueItem | null>(null);
   const [dialogOpen, setDialogOpen] = useState(false);

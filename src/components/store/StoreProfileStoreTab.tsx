@@ -2,7 +2,7 @@ import { ProductCard } from "@/components/landing/ProductCard";
 import { allProducts } from "@/data/mockExtended";
 import { useLocalCache } from "@/hooks/useLocalCache";
 import { type CatalogueItem } from "@/components/seller/CatalogueManager";
-import { type StoreType, STORE_TYPE_LABELS } from "@/data/storeTypes";
+import { type CatalogueCategory, CATALOGUE_CATEGORY_LABELS } from "@/data/storeTypes";
 import { formatNaira } from "@/data/mock";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -12,7 +12,7 @@ import { Search, Package } from "lucide-react";
 interface Props {
   storeName: string;
   storeId?: string;
-  storeType?: StoreType;
+  storeType?: CatalogueCategory;
 }
 
 export default function StoreProfileStoreTab({ storeName, storeId, storeType }: Props) {
@@ -28,7 +28,7 @@ export default function StoreProfileStoreTab({ storeName, storeId, storeType }: 
     <div className="mt-6 space-y-6">
       {storeType && (
         <Badge variant="secondary" className="text-xs">
-          {STORE_TYPE_LABELS[storeType]} Store
+          {CATALOGUE_CATEGORY_LABELS[storeType]} Catalogue
         </Badge>
       )}
 
