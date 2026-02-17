@@ -18,6 +18,7 @@ import Checkout from "./pages/Checkout";
 import SellerDashboard from "./pages/seller/SellerDashboard";
 import BuyerDashboard from "./pages/buyer/BuyerDashboard";
 import StoreProfile from "./pages/StoreProfile";
+import CataloguePublic from "./pages/CataloguePublic";
 import ProfileSetup from "./pages/ProfileSetup";
 
 const queryClient = new QueryClient();
@@ -44,6 +45,7 @@ const App = () => (
               <Route path="/buyer/dashboard" element={<BuyerDashboard />} />
               <Route path="/buyer/orders" element={<BuyerDashboard />} />
               <Route path="/store/:storeName" element={<StoreProfile />} />
+              <Route path="/catalogue/:catalogueId" element={<CataloguePublic />} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
             </Routes>

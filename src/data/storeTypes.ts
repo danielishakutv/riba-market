@@ -7,6 +7,11 @@ export interface SellerCatalogue {
   category: CatalogueCategory;
   description: string;
   createdAt: string;
+  // Customization fields
+  bannerColor?: string;
+  accentColor?: string;
+  welcomeMessage?: string;
+  isPublic?: boolean;
 }
 
 export const CATALOGUE_CATEGORY_LABELS: Record<CatalogueCategory, string> = {
